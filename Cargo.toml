@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 pleco = "0.5.0"
+huffman-compress = "0.6.1"
+itertools = "0.10.3"

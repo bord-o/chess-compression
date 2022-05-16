@@ -1,2 +1,5 @@
 /target
 *.uci
+*.txt
+*.csv
+!index_frequencies.txt
