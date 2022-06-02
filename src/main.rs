@@ -1,13 +1,16 @@
 mod helpers;
 mod huff;
+use std::fs;
+
+use clap;
 use itertools::Itertools;
 
 fn main() {
     let mut db_index: Vec<u16> = Vec::new();
-    let games = helpers::extract_games("/home/bordo/chess-compression/modern35.uci");
+    let games = helpers::extract_games("/home/bordo/chess-compression/onegame.uci");
     let mut g_counter = 0;
     for g in &games {
-        println!("Encoding game: {}\n{}", g_counter, g);
+        println!("Encoding game: {}", g_counter);
         db_index.extend(helpers::index_game(&g));
         g_counter += 1;
     }
@@ -17,10 +20,13 @@ fn main() {
     let (book, tree) = huff::huff_gen(frequencies);
     huff::encode("/home/bordo/chess-compression/etest.txt", &db_index, book);
 
-    let decoded_indexes: Vec<u16> = huff::decode("/home/bordo/chess-compression/etest.txt", tree);
+    let decoded_indexes: Vec<u16> =
+        huff::decode("/home/bordo/chess-compression/fulldbtest.uci", tree);
     let deindexed = helpers::deindex_game(decoded_indexes);
 
-    print!("{}", deindexed);
+    fs::write("/home/bordo/chess-compression/fulldbtest.uci", deindexed)
+        .expect("Unable to write file");
+    // print!("{}", deindexed);
 
     // for num in t.keys().sorted() {
     //     println!("({:?}, {:?})", num, t[num]);

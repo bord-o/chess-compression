@@ -81,24 +81,31 @@ pub fn deindex_game(indexes: Vec<u16>) -> String {
     let mut board = Board::start_pos();
     let mut moves: Vec<String> = Vec::new();
     let mut current_move = String::new();
+    let mut game_counter = 0;
 
     for i in indexes {
         //println!("{}", i);
         if i == 400 {
             current_move = String::from("1-0");
             moves.push(format!("{}\n\n", current_move.clone()));
+            game_counter += 1;
+            println!("Deindexed game: {}", &game_counter);
             board = Board::start_pos();
         }
 
         if i == 500 {
             current_move = String::from("0-1");
             moves.push(format!("{}\n\n", current_move.clone()));
+            game_counter += 1;
+            println!("Deindexed game: {}", &game_counter);
             board = Board::start_pos();
         }
 
         if i == 600 {
             current_move = String::from("1/2-1/2");
             moves.push(format!("{}\n\n", current_move.clone()));
+            game_counter += 1;
+            println!("Deindexed game: {}", &game_counter);
             board = Board::start_pos();
         }
 

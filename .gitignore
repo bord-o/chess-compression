@@ -2,4 +2,6 @@
 *.uci
 *.txt
 *.csv
+*.comp
+*.pgn
 !index_frequencies.txt
