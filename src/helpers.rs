@@ -1,7 +1,5 @@
-use itertools::Itertools;
 use pleco::tools::eval::Eval;
 use pleco::{BitMove, Board};
-use std::collections::HashMap;
 use std::fs;
 
 #[derive(Debug)]
@@ -89,7 +87,6 @@ pub fn deindex_game(indexes: Vec<u16>) -> String {
             current_move = String::from("1-0");
             moves.push(format!("{}\n\n", current_move.clone()));
             game_counter += 1;
-            println!("Deindexed game: {}", &game_counter);
             board = Board::start_pos();
         }
 
@@ -97,7 +94,6 @@ pub fn deindex_game(indexes: Vec<u16>) -> String {
             current_move = String::from("0-1");
             moves.push(format!("{}\n\n", current_move.clone()));
             game_counter += 1;
-            println!("Deindexed game: {}", &game_counter);
             board = Board::start_pos();
         }
 
@@ -105,7 +101,6 @@ pub fn deindex_game(indexes: Vec<u16>) -> String {
             current_move = String::from("1/2-1/2");
             moves.push(format!("{}\n\n", current_move.clone()));
             game_counter += 1;
-            println!("Deindexed game: {}", &game_counter);
             board = Board::start_pos();
         }
 
@@ -113,12 +108,12 @@ pub fn deindex_game(indexes: Vec<u16>) -> String {
         for e in 0..current_evals.len() {
             if e as u16 == i {
                 current_move = current_evals[e].bitmove.stringify();
-                moves.push(current_move.clone());
+                moves.push(current_move.clone() + " ");
             }
         }
         board.apply_uci_move(&current_move);
     }
-    let formatted = moves.join(" ");
+    let formatted = moves.join("").trim_start().to_string();
     return formatted;
 }
 
